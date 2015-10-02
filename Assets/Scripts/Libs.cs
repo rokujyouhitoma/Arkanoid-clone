@@ -24,17 +24,17 @@ namespace Arkanoid {
 			var targetHeight = targetScale.y / scaleY;
 			var p = self.transform.localPosition;
 			var targetP = target.transform.localPosition;
-			var selfRect = new Rect(p.x - selfWidth/2, p.y - selfHeight/2, selfWidth, selfHeight);
-			var targetRect = new Rect(targetP.x - targetWidth/2, targetP.y - targetHeight/2, targetWidth, targetHeight);
+			var selfRect = GetRectByGameObject(self);
+			var targetRect = GetRectByGameObject(target);
 			if (Libs.HitCheckRect(selfRect, targetRect)) {
 				var dirV = selfRect.center - targetRect.center;
 				var isVertical = Mathf.Abs(dirV.x) <= Mathf.Abs(dirV.y);
 				if (isVertical) {
-					var dirY = dirV.y / Mathf.Abs(dirV.y);
-					return new Vector3(p.x, targetP.y + (targetHeight / 2 + selfHeight / 2) * dirY, p.z);
+					var diffY = dirV.y / Mathf.Abs(dirV.y) * selfHeight;
+					return new Vector3(0, diffY, 0);
 				} else {
-					var dirX = dirV.x / Mathf.Abs(dirV.x);
-					return new Vector3(targetP.x + (targetWidth / 2 + selfHeight / 2) * dirX, p.y, p.z);
+					var diffX = dirV.x / Mathf.Abs(dirV.x) * selfWidth;
+					return new Vector3(diffX, 0, 0);
 				}
 			}
 			return p;
@@ -47,10 +47,8 @@ namespace Arkanoid {
 			var targetScale = target.transform.localScale;
 			var targetWidth = targetScale.x / scaleX;
 			var targetHeight = targetScale.y / scaleY;
-			var p = self.transform.localPosition;
-			var targetP = target.transform.localPosition;
-			var selfRect = new Rect(p.x - selfWidth/2, p.y - selfHeight/2, selfWidth, selfHeight);
-			var targetRect = new Rect(targetP.x - targetWidth/2, targetP.y - targetHeight/2, targetWidth, targetHeight);
+			var selfRect = GetRectByGameObject(self);
+			var targetRect = GetRectByGameObject(target);
 			if (Libs.HitCheckRect(selfRect, targetRect)) {
 				var dirV = selfRect.center - targetRect.center;
 				var isVertical = Mathf.Abs(dirV.x) <= Mathf.Abs(dirV.y);
@@ -73,5 +71,14 @@ namespace Arkanoid {
 			return Vector2.zero;
 		}
 
+
+		public static Rect GetRectByGameObject(GameObject ga) {
+			var p = ga.transform.localPosition;
+			var scale = ga.transform.localScale;
+			var width = scale.x / scaleX;
+			var height = scale.y / scaleY;
+			var rect = new Rect(p.x - width/2, p.y - height/2, width, height);
+			return rect;
+		}
 	}
 }

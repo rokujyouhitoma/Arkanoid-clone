@@ -11,6 +11,9 @@ namespace Arkanoid {
 		public float vi = 0f;
 		public float a = 0f;
 
+		public float LimitXMin = -10000f;
+		public float LimitXMax = 10000f;
+
 		void Start() {
 		}
 
@@ -20,8 +23,16 @@ namespace Arkanoid {
 
 		void Move () {
 			var dt = Time.deltaTime;
-			var p = transform.position;
-			transform.position = new Vector3(p.x + (vx * dt), p.y + (vy * dt), p.z);
+			var p = transform.localPosition; 
+			var x = p.x + (vx * dt);
+			var y = p.y + (vy * dt);
+			if (x <= LimitXMin) {
+				x = LimitXMin;
+			} 
+			if (LimitXMax <= x) {
+				x = LimitXMax;
+			}
+			transform.localPosition = new Vector3(x, y, p.z);
 		}
 
 		public void Right() {

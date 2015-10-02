@@ -20,20 +20,45 @@ namespace Arkanoid {
 		}
 
 		void Update () {
-//			VausCollisionResolver();
-//			BordersCollisionResolver();
-			BrickCollisionResolver();
+			VausCollisionResolver();
+			BordersCollisionResolver();
+//			BrickCollisionResolver();
 			Move ();
 		}
 
 		void VausCollisionResolver() {
-			var objs = GameObject.FindGameObjectsWithTag("Vaus");
-			mycollider.CollisionResolver(objs);
+			var p = transform.localPosition;
+			var vaus = GameObject.Find("/Canvas/Layer/GameBoard/Vaus");
 		}
 
 		void BordersCollisionResolver() {
-			var objs = GameObject.FindGameObjectsWithTag("Borders");
-			mycollider.CollisionResolver(objs);
+			var p = transform.localPosition;
+			var background = GameObject.Find("/Canvas/Layer/GameBoard/Background");
+			var backgroundRect = Libs.GetRectByGameObject(background);
+			var diffX = 0f;
+			var diffY = 0f;
+			//right
+			if (backgroundRect.xMax <= p.x) {
+				diffX = -(p.x - backgroundRect.xMax);
+				dir = new Vector2(dir.x * -1, dir.y);
+			}
+			//left
+			if (p.x <= backgroundRect.xMin) {
+				diffX = backgroundRect.xMin - p.x;
+				dir = new Vector2(dir.x * -1, dir.y);
+			}
+			//top
+			if (backgroundRect.yMax <= p.y) {
+				diffY = -(p.y - backgroundRect.yMax);
+				dir = new Vector2(dir.x, dir.y * -1);
+			}
+			//bottom
+			if (p.y <= backgroundRect.yMin) {
+				diffY = backgroundRect.yMin - p.y;
+//				Destroy(gameObject); //TODO
+				dir = new Vector2(dir.x, dir.y * -1);
+			}
+			transform.localPosition = new Vector3(p.x + diffX, p.y + diffY, p.z);
 		}
 
 		void BrickCollisionResolver() {
@@ -47,21 +72,32 @@ namespace Arkanoid {
 			movement.vy = vec.y;
 		}
 
+		void OnUpper(GameObject ga) {
+			OnHorizontal(ga);
+		}
+
+		void OnLower(GameObject ga) {
+			OnHorizontal(ga);
+		}
+
 		void OnHorizontal(GameObject ga) {
-			ResolvePosition(ga);
+			Debug.Log("Hor");
+//			ResolvePosition(ga);
 			dir = new Vector2(dir.x, dir.y * -1);
-			Debug.Log (dir);
 //			dir = new Vector2(0, 0);
 		}
 
 		void OnVertical(GameObject ga) {
+			Debug.Log("VER");
 			ResolvePosition(ga);
 			dir = new Vector2(dir.x * -1, dir.y);
 //			dir = new Vector2(0, 0);
 		}
 
 		void ResolvePosition(GameObject ga) {
-			transform.localPosition = Libs.ResolvePosition(gameObject, ga);
+			var p = transform.localPosition;
+			var diff = Libs.ResolvePosition(gameObject, ga);
+			transform.localPosition = new Vector3(p.x + diff.x, p.y + diff.y, p.z * diff.z);
 		}
  	}
 }

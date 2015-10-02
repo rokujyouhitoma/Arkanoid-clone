@@ -9,12 +9,16 @@ namespace Arkanoid {
 			movement = GetComponent<Movement>();
 		}
 
+		void Start() {
+			SetupLimitOfMove();
+		}
+
 		void Update () {
 			if (Input.GetKey("right")) {
-				movement.Right();
+				Right ();
 			}
 			if (Input.GetKey("left")) {
-				movement.Left();
+				Left ();
 			}
 			if (Input.GetKeyUp("right")) {
 				movement.Stop();
@@ -22,6 +26,23 @@ namespace Arkanoid {
 			if (Input.GetKeyUp("left")) {
 				movement.Stop();
 			}
+		}
+
+		void Right() {
+			movement.Right();
+		}
+
+		void Left() {
+			movement.Left();
+		}
+
+		void SetupLimitOfMove () {
+ 			var rect = Libs.GetRectByGameObject(gameObject);
+			var background = GameObject.Find("/Canvas/Layer/GameBoard/Background");
+			var backgroundRect = Libs.GetRectByGameObject(background);
+			movement.LimitXMin = backgroundRect.xMin + rect.width / 2;
+			Debug.Log(movement.LimitXMin);
+			movement.LimitXMax = backgroundRect.xMax - rect.width / 2;
 		}
 	}
 }
