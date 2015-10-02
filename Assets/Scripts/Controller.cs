@@ -26,6 +26,7 @@ namespace Arkanoid {
 			if (Input.GetKeyUp("left")) {
 				movement.Stop();
 			}
+			movement.Move();
 		}
 
 		void Right() {
@@ -41,7 +42,6 @@ namespace Arkanoid {
 			var background = GameObject.Find("/Canvas/Layer/GameBoard/Background");
 			var backgroundRect = Libs.GetRectByGameObject(background);
 			movement.LimitXMin = backgroundRect.xMin + rect.width / 2;
-			Debug.Log(movement.LimitXMin);
 			movement.LimitXMax = backgroundRect.xMax - rect.width / 2;
 		}
 	}

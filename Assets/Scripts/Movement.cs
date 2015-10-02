@@ -18,10 +18,9 @@ namespace Arkanoid {
 		}
 
 		void Update () {
-			Move();
 		}
 
-		void Move () {
+		public void Move () {
 			var dt = Time.deltaTime;
 			var p = transform.localPosition; 
 			var x = p.x + (vx * dt);
