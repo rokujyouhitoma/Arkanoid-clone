@@ -2,7 +2,7 @@
 using System.Collections;
 
 namespace Arkanoid {
-	public class Controller : MonoBehaviour {
+	public class Vaus: MonoBehaviour {
 		Movement movement;
 
 		void Awake() {
@@ -44,5 +44,8 @@ namespace Arkanoid {
 			movement.LimitXMin = backgroundRect.xMin + rect.width / 2;
 			movement.LimitXMax = backgroundRect.xMax - rect.width / 2;
 		}
-	}
+
+		void OnBall(GameObject ga) {
+        }
+    }
 }
