@@ -26,7 +26,16 @@ namespace Arkanoid {
 			if (Input.GetKeyUp("left")) {
 				movement.Stop();
 			}
-			movement.Move();
+			var diff = movement.Move();
+			UpdateBalls(diff);
+		}
+
+		void UpdateBalls(Vector3 diff) {
+			var objs = GameObject.FindGameObjectsWithTag("Balls");
+			foreach (var obj in objs) {
+				var ball= obj.GetComponent<Ball>();
+				ball.MoveByDiff(diff);
+			}
 		}
 
 		void Right() {

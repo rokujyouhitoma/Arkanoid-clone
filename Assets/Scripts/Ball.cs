@@ -6,7 +6,7 @@ namespace Arkanoid {
 		public float speed = 0f;
 		public float attack = 1f;
 		public Vector3 p1;
-		public bool stop = false;
+		public bool stop = true;
 
 //		MyCollider mycollider;
 
@@ -19,7 +19,7 @@ namespace Arkanoid {
 			p1 = Vector3.zero;
 		}
 
-		void Start() {
+		void Start() { 
 			dir = (new Vector2(1, 2)).normalized;
 		}
 
@@ -34,7 +34,15 @@ namespace Arkanoid {
 				Stop();
 			}
 		}
-		 
+
+		public void MoveByDiff(Vector3 diff) {
+			if (!IsStop()) {
+				return;
+			}
+			var p = transform.localPosition;
+			transform.localPosition = new Vector3(p.x + diff.x, p.y + diff.y, p.z + diff.z);
+		}
+
 		public bool IsStop() {
 			return stop;
 		}
@@ -72,8 +80,9 @@ namespace Arkanoid {
 			//bottom-border
 			//TODO: xxx
 			if (p.y <= rect.yMin) {
-				diffY = rect.yMin - p.y;
-				dir = new Vector2(dir.x, dir.y * -1);
+				Die();
+ //				diffY = rect.yMin - p.y;
+//				dir = new Vector2(dir.x, dir.y * -1);
 			}
 			transform.localPosition = new Vector3(p.x + diffX, p.y + diffY, p.z);
 		}
@@ -188,5 +197,8 @@ namespace Arkanoid {
 			movement.vy = vec.y;
 		}
 
+		void Die() {
+			Destroy(gameObject);
+		}
  	}
 }

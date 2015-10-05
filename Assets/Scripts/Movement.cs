@@ -20,18 +20,23 @@ namespace Arkanoid {
 		void Update () {
 		}
 
-		public void Move () {
+		public Vector3 Move () {
 			var dt = Time.deltaTime;
 			var p = transform.localPosition; 
-			var x = p.x + (vx * dt);
-			var y = p.y + (vy * dt);
+			var diffX = (vx * dt);
+			var diffY = (vy * dt);
+			var x = p.x + diffX;
+			var y = p.y + diffY;
 			if (x <= LimitXMin) {
 				x = LimitXMin;
+				diffX = x - p.x;
 			} 
 			if (LimitXMax <= x) {
 				x = LimitXMax;
+				diffX = x - p.x;
 			}
 			transform.localPosition = new Vector3(x, y, p.z);
+			return new Vector3(diffX, diffY, 0);
 		}
 
 		public void Right() {
