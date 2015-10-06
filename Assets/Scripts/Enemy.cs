@@ -22,6 +22,7 @@ namespace Arkanoid {
 		
 		void Update () {
 			BordersCollisionResolver();
+			BricksCollisionResolver();
 			UpdateMovement();
 			movement.Move();
 		}
@@ -89,6 +90,10 @@ namespace Arkanoid {
 				dir = new Vector2(dir.x, dir.y * -1);
 			}
 			transform.localPosition = new Vector3(p.x + diffX, p.y + diffY, p.z);
+		}
+
+		void BricksCollisionResolver() {
+			var objs = GameObject.FindGameObjectsWithTag("Bricks");
 		}
 
 		void OnBall(GameObject ga) {

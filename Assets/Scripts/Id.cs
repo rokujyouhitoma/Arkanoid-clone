@@ -5,6 +5,13 @@ namespace Arkanoid {
 	public class Id : MonoBehaviour {
 		public string type;
 
+		public const string Silver = "Silver";
+		public const string Red = "Red";
+		public const string Blue = "Blue";
+		public const string Orange = "Orange";
+		public const string Pink = "Pink";
+		public const string GreenishYellow = "GreenishYellow";
+
 		public const string Enemy = "Enemy";
 
 		public const string SpeedDown = "SpeedDown";

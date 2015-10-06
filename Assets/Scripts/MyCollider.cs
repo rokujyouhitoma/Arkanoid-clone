@@ -10,6 +10,14 @@ namespace Arkanoid {
 				return;
 			}
 			switch (id.type) {
+			case Id.Silver:
+			case Id.Red:
+			case Id.Blue:
+			case Id.Orange:
+			case Id.Pink:
+			case Id.GreenishYellow:
+				Debug.Log ("Bricks");
+				break;
 			case Id.SpeedDown:
 			case Id.Catch:
 			case Id.Disruption:
