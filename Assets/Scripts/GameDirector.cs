@@ -29,6 +29,8 @@ namespace Arkanoid {
 				if (0f < vaus) {
 					CreateBall();
 					SetUpVaus();
+					DeleteItems();
+					DeleteEnemies();
 				} else {
 					ResetGame();
 				}
@@ -108,12 +110,30 @@ namespace Arkanoid {
 			vaus.SendMessage("OnExpand", gameObject);
  		}
 
+		void DeleteItems() {
+			var objs = GameObject.FindGameObjectsWithTag("Items");
+			foreach(var obj in objs) {
+				Destroy(obj);
+			}
+		}
+
+		void DeleteEnemies() {
+			var objs = GameObject.FindGameObjectsWithTag("Enemies");
+			foreach(var obj in objs) {
+				Destroy(obj);
+			}
+		}
+
 		void TerminateBall() {
 			DamageVaus(1f);
 		}
 
 		void ClearRound() {
-			Debug.Log ("Clear Round");
+			var objs = GameObject.FindGameObjectsWithTag("Balls");
+			foreach(var obj in objs) {
+				var ball = obj.GetComponent<Ball>();
+				ball.Stop();
+			}
 		}
 
 		void OnPlayerExtend(GameObject ga) {

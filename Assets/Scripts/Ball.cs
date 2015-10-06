@@ -30,6 +30,7 @@ namespace Arkanoid {
 			VausCollisionResolver();
 			BordersCollisionResolver();
 			BrickCollisionResolver();
+			EnemyCollisionResolver();
 			p1 = transform.localPosition;
 			UpdateVec ();
 			if (IsStop ()) {
@@ -54,8 +55,8 @@ namespace Arkanoid {
 			speed -= 20f;
 		}
 
-		void Stop() {
-			movement.Stop();
+		public void Stop() {
+			movement.Clear();
 		}
 
 		void VausCollisionResolver() {
@@ -98,10 +99,19 @@ namespace Arkanoid {
 			CollisionObjectsResolver(objs);
 		}
 
+		void EnemyCollisionResolver() {
+			var objs = GameObject.FindGameObjectsWithTag("Enemies");
+			CollisionObjectsResolver(objs);
+		}
+
 		public void CollisionObjectsResolver(GameObject[] objects) {
 			foreach (GameObject obj in objects) {
 				CollisionObjectResolver(obj);
 			}
+		}
+
+		void OnEnemy(GameObject ga) {
+			Debug.Log ("xxxx");
 		}
 
 		public void CollisionObjectResolver(GameObject obj) {
@@ -119,7 +129,7 @@ namespace Arkanoid {
 				                 new Vector2(p1.x, p1.y),
 				                 new Vector2(rect.xMin, rect.yMin),
 				                 new Vector2(rect.xMax, rect.yMin))) {
-					diffY = -(p.y - rect.yMin);
+					diffY = rect.yMin - p.y;
 					dir = new Vector2(dir.x, dir.y * -1);
 					obj.SendMessage("OnBall", gameObject);
 				}
@@ -127,8 +137,8 @@ namespace Arkanoid {
 				if (Libs.IsCross(new Vector2(p.x, p.y),
 				                 new Vector2(p1.x, p1.y),
 				                 new Vector2(rect.xMin, rect.yMin),
-					                 new Vector2(rect.xMin, rect.yMax))) {
-					diffX = -(p.x - rect.xMin);
+					             new Vector2(rect.xMin, rect.yMax))) {
+					diffX = rect.xMin - p.x;
 					dir = new Vector2(dir.x * -1, dir.y);
 					obj.SendMessage("OnBall", gameObject);
                 }

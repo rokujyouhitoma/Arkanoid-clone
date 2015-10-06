@@ -5,6 +5,8 @@ namespace Arkanoid {
 	public class Id : MonoBehaviour {
 		public string type;
 
+		public const string Enemy = "Enemy";
+
 		public const string SpeedDown = "SpeedDown";
 		public const string Catch = "Catch";
 		public const string Disruption = "Disruption";

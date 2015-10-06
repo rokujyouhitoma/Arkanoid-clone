@@ -27,10 +27,10 @@ namespace Arkanoid {
 				Left ();
 			}
 			if (Input.GetKeyUp("right")) {
-				movement.Stop();
+				movement.Clear();
 			}
 			if (Input.GetKeyUp("left")) {
-				movement.Stop();
+				movement.Clear();
 			}
 			var diff = movement.Move();
 			if(IsExpand()) {

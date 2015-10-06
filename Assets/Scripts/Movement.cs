@@ -63,7 +63,7 @@ namespace Arkanoid {
 			vy = -v;
 		}
 
-		public void Stop() {
+		public void Clear() {
 			vx = 0f;
 			vy = 0f;
 		}
