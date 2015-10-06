@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 namespace Arkanoid {
 	public class MyCollider : MonoBehaviour {
 		public void OnEnter(GameObject ga, Vector2 dir) {
@@ -9,6 +8,7 @@ namespace Arkanoid {
 				Debug.LogError ("bugs...");
 				return;
 			}
+			gameObject.SendMessage("OnItem", ga);
 //			if (0 < dir.y) {
 //				gameObject.SendMessage("OnUpper", ga);
 //			} else if (dir.y < 0) {

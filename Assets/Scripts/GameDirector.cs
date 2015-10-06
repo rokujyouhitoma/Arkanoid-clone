@@ -10,6 +10,12 @@ namespace Arkanoid {
 
 		public GameObject ballPrefab;
 
+		Generator itemGenerator;
+
+		void Awake() {
+			itemGenerator = GetComponent<Generator>();
+		}
+
 		void Start () {
 			Invoke("StartMoveBall", 5);
 		}
@@ -56,7 +62,7 @@ namespace Arkanoid {
 			if (0f < vaus) {
 				vaus = Mathf.Max(0f, vaus - amount);
 				if (vaus <= 0f) {
-					Debug.Log ("die...");
+					Debug.Log ("die..."); //TODO
 				}
 			}
 		}
@@ -86,6 +92,7 @@ namespace Arkanoid {
         }
 
 		void CreateBall() {
+			//TODO
 			var ball = (GameObject)Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
 			var gameBoard = GameObject.Find ("/Canvas/Layer/GameBoard");
 			ball.tag = "Balls";
@@ -98,7 +105,8 @@ namespace Arkanoid {
 		void SetUpVaus() {
 			var vaus = GameObject.Find("/Canvas/Layer/GameBoard/Vaus");
 			vaus.transform.localPosition = new Vector3( 0, -92, -1);
-		}
+			vaus.SendMessage("OnExpand", gameObject);
+ 		}
 
 		void TerminateBall() {
 			DamageVaus(1f);
@@ -107,5 +115,13 @@ namespace Arkanoid {
 		void ClearRound() {
 			Debug.Log ("Clear Round");
 		}
-	}
+
+		void OnPlayerExtend(GameObject ga) {
+			DamageVaus(-1f) ;
+        }
+
+		public GameObject GetItemPrefabRandom() {
+			return itemGenerator.GenerateRandom();
+		}
+    }
 }

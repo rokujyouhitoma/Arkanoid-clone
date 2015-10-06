@@ -12,15 +12,17 @@ namespace Arkanoid {
 
 		Movement movement;
 		Vector2 dir;
+		GameObject background;
 
 		void Awake() {
 //			mycollider = GetComponent<MyCollider>();
 			movement = GetComponent<Movement>();
-			p1 = Vector3.zero;
 		}
 
 		void Start() { 
+			background = GameObject.Find("/Canvas/Layer/GameBoard/Background");
 			dir = (new Vector2(1, 2)).normalized;
+			p1 = Vector3.zero;
 		}
 
 		void Update () {
@@ -47,6 +49,11 @@ namespace Arkanoid {
 			return stop;
 		}
 
+		//TODO: xxx
+		void OnSpeedDown(GameObject ga) {
+			speed -= 20f;
+		}
+
 		void Stop() {
 			movement.Stop();
 		}
@@ -58,7 +65,6 @@ namespace Arkanoid {
 
 		void BordersCollisionResolver() {
 			var p = transform.localPosition;
-			var background = GameObject.Find("/Canvas/Layer/GameBoard/Background");
 			var rect = Libs.GetRectByGameObject(background);
 			var diffX = 0f;
 			var diffY = 0f;
@@ -105,7 +111,6 @@ namespace Arkanoid {
 			var p = transform.localPosition;
 			var diff = p - p1;
 			if (diff.x == 0f && diff.y == 0f) {
-				Debug.Log ("???");
 				return;
 			}
 			if (0f <= diff.x && 0f <= diff.y) {

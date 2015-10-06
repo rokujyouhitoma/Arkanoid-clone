@@ -29,31 +29,6 @@ namespace Arkanoid {
 			return Libs.HitCheckRect(ga1Rect, ga2Rect);
 		}
 
-//		public static Vector3 ResolvePosition(GameObject self, GameObject target) {
-//			var selfScale = self.transform.localScale;
-//			var selfWidth = selfScale.x / scaleX;
-//			var selfHeight = selfScale.y / scaleY;
-//			var targetScale = target.transform.localScale;
-//			var targetWidth = targetScale.x / scaleX;
-//			var targetHeight = targetScale.y / scaleY;
-//			var p = self.transform.localPosition;
-//			var targetP = target.transform.localPosition;
-//			var selfRect = GetRectByGameObject(self);
-//			var targetRect = GetRectByGameObject(target);
-//			if (Libs.HitCheckRect(selfRect, targetRect)) {
-//				var dirV = selfRect.center - targetRect.center;
-//				var isVertical = Mathf.Abs(dirV.x) <= Mathf.Abs(dirV.y);
-//				if (isVertical) {
-//					var diffY = dirV.y / Mathf.Abs(dirV.y) * selfHeight;
-//					return new Vector3(0, diffY, 0);
-//				} else {
-//					var diffX = dirV.x / Mathf.Abs(dirV.x) * selfWidth;
-//					return new Vector3(diffX, 0, 0);
-//				}
-//			}
-//			return p;
-//		}
-
 		public static Vector2 CollisionVector2(GameObject self, GameObject target) {
 			var selfScale = self.transform.localScale;
 			var selfWidth = selfScale.x / scaleX;
